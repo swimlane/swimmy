@@ -1,0 +1,57 @@
+version: '3.7'
+
+
+services:
+  sw_web:
+
+  sw_mongo:
+
+  sw_api:
+    #volumes:
+    #  - /path/to/thirdpartycerts:/usr/local/share/ca-certificates/swimlane/
+  sw_tasks:
+    #volumes:
+    #  - /path/to/local/workspace:/app/workspace
+    #  - /path/to/thirdpartycerts:/usr/local/share/ca-certificates/swimlane/
+  #sw_syslog_receiver:
+  #  container_name: sw_syslog_receiver
+  #  image: <sw_docker_image_repo_placeholder>swimlane/swimlane-syslog-receiver:latest
+  #  restart: unless-stopped
+  #  volumes:
+  #    - syslog-vol:/app/log/syslog-receiver
+  #  ports:
+  #    - 514:5514/udp
+  #chrome:
+  #  container_name: chrome
+  #  image: selenium/standalone-chrome:3.141.59
+  #  restart: unless-stopped
+  #  shm_size: '2gb'
+  #  networks:
+  #    - internal_network
+  swimmy:
+    build: 
+      context: /opt/swimmy
+      dockerfile: Dockerfile
+    container_name: swimmy
+    restart: unless-stopped
+    env_file: /opt/swimmy/.env
+    ports:
+      - 3000:3000
+    environment:
+      SLACK_BOT_USERNAME: ${SLACK_BOT_USERNAME}
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
+      SLACK_BOT_SIGNING_SECRET: ${SLACK_BOT_SIGNING_SECRET}
+      SWIMLANE_HOST: ${SWIMLANE_HOST}
+      SWIMLANE_USERNAME: ${SWIMLANE_USERNAME}
+      SWIMLANE_PASSWORD: ${SWIMLANE_PASSWORD}
+      #SWIMLANE_ACCESS_TOKEN: ${SWIMLANE_ACCESS_TOKEN}
+      SWIMLANE_VERIFY_SSL: ${SWIMLANE_VERIFY_SSL}
+      #SWIMLANE_VERIFY_SERVER_VERSION: ${SWIMLANE_VERIFY_SERVER_VERSION}
+      #SWIMLANE_DEFAULT_TIMEOUT: ${SWIMLANE_DEFAULT_TIMEOUT}
+      #SWIMLANE_RESOURCE_CACHE_SIZE: ${SWIMLANE_RESOURCE_CACHE_SIZE}
+      #SWIMLANE_WRITE_TO_READ_OLNLY: ${SWIMLANE_WRITE_TO_READ_OLNLY}
+      SWIMLANE_SEARCH_RESULTS_MAX_RESULTS: ${SWIMLANE_SEARCH_RESULTS_MAX_RESULTS}
+    
+#volumes:
+#  syslog-vol:
+#    external: false

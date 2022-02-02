@@ -1,0 +1,24 @@
+_metadata:
+  major_version: 1
+  minor_version: 1
+display_information:
+  name: Swimmy
+  description: Interact with Swimlane
+  background_color: "#028acf"
+features:
+  bot_user:
+    display_name: Swimmy
+    always_online: false
+  slash_commands:
+    - command: /swimmy
+      url: https://0.0.0.0:3000/slack/events
+      description: Gets Information from Swimlane
+      should_escape: false
+oauth_config:
+  scopes:
+    bot:
+      - commands
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
