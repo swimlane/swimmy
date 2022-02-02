@@ -10,10 +10,22 @@ Currently Swimmy has the following capabilities:
 * get [acronym] tasks
 * create [acronym] record
 
-
 > When using the search command Swimmy is configured to return the first {Config.search_results_max_results} results.
 
 ## Getting Started 
+
+In order to use **Swimmy** you will need to [create a Slack application](#creating-a-slack-application) and [gather authentication credentials for Swimlane](#swimlane-setup).
+
+You will need, at a minimum, the following before you can setup **Swimmy**:
+
+* Slack bot token
+* Slack bot signing secret
+* Swimlane hostname
+* Swimlany authentication credentials
+    * Swimlane Personal Access Token with access to call the Swimlane API or
+    * Swimlane username and password for an account that can call the Swimlane API
+
+Once you have gathered these values you must create a `.env` including these (and other) [configuration settings](#configuration-settings)
 
 ### Creating a Slack Application 
 
@@ -96,6 +108,10 @@ cd swimmy
 cp .env.example .env
 ```
 
+### Configuration Settings
+
+The following are the avialble list of configuration settings for **Swimmy**. In order to use this project you must copy the [.env.example](.env.example) file and create a new `.env` file. Next you will need to update this `.env` file with your configuration values.
+
 Update the `.env` file with your tokens and credentials.
 
 ```text
@@ -117,17 +133,13 @@ SWIMLANE_VERIFY_SSL=False
 SWIMLANE_SEARCH_RESULTS_MAX_RESULTS=10
 ```
 
-### Installing
+### Deployment
 
 To begin running this project simply run:
 
 ```
 docker-compose up --build --remove-orphans
 ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
