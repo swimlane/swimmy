@@ -3,7 +3,6 @@ import os
 
 class Config:
 
-    port = int(os.environ.get('PORT', 7777))
     slack = {
         'bot_username': os.environ.get('SLACK_BOT_USERNAME', 'swimmy'),
         'bot_token': os.environ.get('SLACK_BOT_TOKEN', None),

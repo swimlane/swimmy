@@ -33,7 +33,7 @@ The first step is to edit the provided [Slack Application Manifest](swimmy.slack
 
 The url must be in the following format:
 
-`https://{your_ip_or_domain_plus_port}/slack/events`
+`https://{your_ip_or_domain}:3000/slack/events`
 
 > Please note that currently it requires the address to have https. Please make sure that your address has this in the manifest. After it is upload you can modify this back to http in the `Slash Commands` section of the application.
 
@@ -77,7 +77,7 @@ Go to the `Slash Commands` section under `Features`
 
 ![](images/slack_commands.png)
 
-And click the pencil to edit your `/swimlane` slash command. When prompted edit the URL back to http and click save.
+And click the pencil to edit your `/swimmy` slash command. When prompted edit the URL back to http and click save.
 
 ![](images/edit_slash_commands_url.png)
 
@@ -89,13 +89,15 @@ The first thing you need in order to use Swimmy is a set of credentials to acces
 
 If you are using a Swimlane instance that is Docker based (deployed using docker-compose) then you can use the provided [docker-compose.override.yml](docker-compose.override.yml) file. 
 
+Additionally, this [docker-compose.override.yml](docker-compose.override.yml) file expects that swimmy is located at `/opt/swimmy`.
+
 To do so you must first copy or clone the Swimmy repository to 
 
 ```
 /opt/swimmy
 ```
 
-Next you will need to copy the  [docker-compose.override.yml](docker-compose.override.yml) to `/opt/swimlane/docker-compose.override.yml`. Once this is done then you can stand up your Swimlane instance running `docker-compose up -d`
+Next you will need to copy the  [docker-compose.override.yml](docker-compose.override.yml) to `/opt/swimlane/docker-compose.override.yml`. You will also need to copy your `.env` file to `/opt/swimlane/.env`. Once this is done then you can stand up your Swimlane instance running `docker-compose up -d`
 
 
 ### Prerequisites
@@ -115,8 +117,6 @@ The following are the avialble list of configuration settings for **Swimmy**. In
 Update the `.env` file with your tokens and credentials.
 
 ```text
-PORT=3000
-SLACK_BOT_USERNAME=swimmy
 SLACK_BOT_TOKEN=some_token
 SLACK_BOT_SIGNING_SECRET=some_signing_secret
 
@@ -124,11 +124,11 @@ SWIMLANE_HOST=https://my.orgs.swimlane.instance
 SWIMLANE_USERNAME=username
 SWIMLANE_PASSWORD=some_password
 #SWIMLANE_ACCESS_TOKEN=or_some_access_token
-SWIMLANE_VERIFY_SSL=False
-#SWIMLANE_VERIFY_SERVER_VERSION=False
+SWIMLANE_VERIFY_SSL="False"
+#SWIMLANE_VERIFY_SERVER_VERSION="False"
 #SWIMLANE_DEFAULT_TIMEOUT=300
 #SWIMLANE_RESOURCE_CACHE_SIZE=0
-#SWIMLANE_WRITE_TO_READ_OLNLY=False
+#SWIMLANE_WRITE_TO_READ_OLNLY="False"
 
 SWIMLANE_SEARCH_RESULTS_MAX_RESULTS=10
 ```
@@ -138,7 +138,7 @@ SWIMLANE_SEARCH_RESULTS_MAX_RESULTS=10
 To begin running this project simply run:
 
 ```
-docker-compose up --build --remove-orphans
+docker-compose up 
 ```
 
 ## Built With

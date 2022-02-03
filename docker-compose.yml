@@ -8,7 +8,6 @@ services:
     container_name: swimmy
     restart: unless-stopped
     environment:
-      SLACK_BOT_USERNAME: ${SLACK_BOT_USERNAME}
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
       SLACK_BOT_SIGNING_SECRET: ${SLACK_BOT_SIGNING_SECRET}
       SWIMLANE_HOST: ${SWIMLANE_HOST}
@@ -22,5 +21,4 @@ services:
       #SWIMLANE_WRITE_TO_READ_OLNLY: ${SWIMLANE_WRITE_TO_READ_OLNLY}
       SWIMLANE_SEARCH_RESULTS_MAX_RESULTS: ${SWIMLANE_SEARCH_RESULTS_MAX_RESULTS}
     ports:
-     - "3000:3000"
-    volumes: ['./swimmy:/swimmy']
+     - "3000:3001"

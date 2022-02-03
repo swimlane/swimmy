@@ -86,7 +86,7 @@ When using the search command Swimmy is configured to return the first {Config.s
                         text=text,
                         accessory=self.message.create_accessory(
                             type='button',
-                            url=f"{self.host_name}/search/{item.get('id')}/{item.get('default_report_id')}",
+                            url=f"{self.host_name}/integration/plugins",
                             text=item.get('name')
                         )
                     )
@@ -184,11 +184,11 @@ When using the search command Swimmy is configured to return the first {Config.s
         if results:
             for item in results:
                 self.message.add_markdown_section(
-                    text=f"{item.display_name} ({item.username})",
+                    text=f"{item.get('name')}",
                     accessory=self.message.create_accessory(
                         type='button',
-                        url=f"{self.host_name}/user/{item.id}",
-                        text=item.display_name
+                        url=f"{self.host_name}/user/{item.get('id')}",
+                        text=item.get('name')
                     )
                 )
         else:

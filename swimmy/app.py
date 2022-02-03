@@ -1,5 +1,4 @@
 import re
-import logging
 from slack_bolt import App
 from slack_sdk.web import WebClient
 from .instance import SwimlaneInstance
@@ -27,11 +26,11 @@ except:
     raise Exception('Please make sure you have the correct authentication credentials to your Swimlane instance.')
 
 
-@app.command("/swimlane")
-def hello_command(ack, respond, body):
+@app.command("/swimmy")
+def swimmy(ack, respond, body):
     """This is the main slash command for swimmy.
 
-    When using the /swimlane command you can pass the following values/structures:
+    When using the /swimmy command you can pass the following values/structures:
         * workspaces
         * assets
         * applications
@@ -190,8 +189,5 @@ def hello_command(ack, respond, body):
 
 
 def create_bot():
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
-    logger.addHandler(logging.StreamHandler())
-    app.start(Config.port)
+    app.start(port=3001)
     return app

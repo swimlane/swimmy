@@ -120,7 +120,7 @@ class SwimlaneInstance(Base):
 
     @log_exception
     def get_swimlane_users(self):
-        return self.swimlane.users.list()
+        return self.swimlane.request('GET', '/user/light').json()
 
     @log_exception
     def get_swimlane_health(self):
