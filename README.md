@@ -1,5 +1,7 @@
 # Swimmy
 
+<img src="images/swimmy_no_bubble.png" alt="swimmy" width="200"/>
+
 Swimmy is a [Swimlane](https://swimlane.com) Slack bot written in Python to interact with your Swimlane instance.
 
 Currently Swimmy has the following capabilities:
