@@ -18,6 +18,6 @@ class Config:
         'verify_server_version': bool(os.environ.get('SWIMLANE_VERIFY_SERVER_VERSION', False)),
         'default_timeout': int(os.environ.get('SWIMLANE_DEFAULT_TIMEOUT', 300)),
         'resource_cache_size': int(os.environ.get('SWIMLANE_RESOURCE_CACHE_SIZE', 0)),
-        'write_to_read_only': bool(os.environ.get('SWIMLANE_WRITE_TO_READ_OLNLY', False)),
+        'write_to_read_only': bool(os.environ.get('SWIMLANE_WRITE_TO_READ_ONLY', False)),
     }
     search_results_max_results = int(os.environ.get('SWIMLANE_SEARCH_RESULTS_MAX_RESULTS', 10))
