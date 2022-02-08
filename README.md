@@ -1,6 +1,6 @@
 # Swimmy
 
-<img src="images/swimmy_no_bubble.png" alt="swimmy" width="200"/>
+<img src="images/swimmy_logo.png" alt="swimmy" width="200"/>
 
 Swimmy is a [Swimlane](https://swimlane.com) Slack bot written in Python to interact with your Swimlane instance.
 
@@ -33,6 +33,8 @@ Once you have gathered these values you must create a `.env` including these (an
 
 The first step is to edit the provided [Slack Application Manifest](swimmy.slack.manifest.yml). The only piece you will need to modify is the location where Swimmy is running (including port). 
 
+> You can find more information about Slack Application Manifests [here](https://api.slack.com/reference/manifests#manifest_apis)
+
 The url must be in the following format:
 
 `https://{your_ip_or_domain}:3000/slack/events`
@@ -64,6 +66,10 @@ Next install your app to the selected workspace by selecting `Install to Workspa
 After installing Swimmy you then need to scroll down and save the `Signing Secret` value in a safe place. We will be using this when we deploy Swimmy.
 
 ![](images/signing_secret.png)
+
+Keep scrolling and at the bottom of the page under `Display Information` click on location of the applications logo under `App icon & preview` and upload the [Swimmy Application Icon](images/swimmy_app_icon.png).
+
+![](images/display_information.png)
 
 Next select the `OAuth & Permissions` section under `Features`.  You may have to select `Generate Tokens`. Please do that now and then capture the `Bot User OAuth Token`. We will be using this when we deploy Swimmy.
 

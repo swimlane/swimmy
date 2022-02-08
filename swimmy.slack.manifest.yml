@@ -3,8 +3,9 @@ _metadata:
   minor_version: 1
 display_information:
   name: Swimmy
-  description: Interact with Swimlane
-  background_color: "#028acf"
+  description: Swimmy enables you to interact with your Swimlane instance
+  long_description: Swimmy is a Slack Bot which enables Security Operations Centers (SOCs), Information Technology and other teams to interact and retrieve data from their Swimlane instance. You can find more information about Swimmy [here](https://github.com/swimlane/swimmy).
+  background_color: "#455066"
 features:
   bot_user:
     display_name: Swimmy
@@ -12,7 +13,8 @@ features:
   slash_commands:
     - command: /swimmy
       url: https://0.0.0.0:3000/slack/events
-      description: Gets Information from Swimlane
+      description: Your friendly automation assistant
+      usage_hint: /swimmy [applications, assets, health, help, packages, plugins, workspaces, users]
       should_escape: false
 oauth_config:
   scopes:

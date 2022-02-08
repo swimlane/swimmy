@@ -46,6 +46,7 @@ def swimmy(ack, respond, body):
     """
     ack()
     blocks = []
+    formatter = None
     if body.get('text'):
         request_string = body['text'].split()
         formatter = Formatter(swimlane.swimlane.host)
@@ -184,6 +185,8 @@ def swimmy(ack, respond, body):
         else:
             blocks = formatter.help(body['text'])
     if not blocks:
+        if not formatter:
+            formatter = Formatter(swimlane.swimlane.host)
         blocks = formatter.error(endpoint='unknown', unknown=True)
     respond(blocks=blocks)
 
