@@ -4,7 +4,7 @@ _metadata:
 display_information:
   name: Swimmy
   description: Swimmy enables you to interact with your Swimlane instance
-  long_description: Swimmy is a Slack Bot which enables Security Operations Centers (SOCs), Information Technology and other teams to interact and retrieve data from their Swimlane instance. You can find more information about Swimmy [here](https://github.com/swimlane/swimmy).
+  long_description: Swimmy is a Slack Bot which enables Security Operations Centers (SOCs), Information Technology and other teams to interact and retrieve data from their Swimlane instance. You can find more information about Swimmy at https://github.com/swimlane/swimmy
   background_color: "#455066"
 features:
   bot_user:
