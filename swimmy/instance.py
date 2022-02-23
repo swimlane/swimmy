@@ -77,11 +77,14 @@ class SwimlaneInstance(Base):
     def get_swimlane_plugins(self):
         return self.swimlane.request('GET', '/task/packages').json()
 
-    @log_exception
-    def get_pip_packages(self, versions=['Python2_7', 'Python3_6']):
+    def get_pip_packages(self, versions=['Python2_7', 'Python3_6', 'Python3']):
         return_list = []
         for version in versions:
-            return_list.extend(self.swimlane.request('GET', '/pip/packages/{}'.format(version)).json())
+            try:
+                return_list.extend(self.swimlane.request('GET', '/pip/packages/{}'.format(version)).json())
+            except:
+                self.__logger.info(f"The specified version does not exist: {version}")
+                pass
         return return_list
 
     @log_exception

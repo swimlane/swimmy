@@ -161,6 +161,8 @@ When using the search command Swimmy is configured to return the first {Config.s
                             python_version = 'Python 2.7'
                         elif item['pythonVersion'] == 'python3_7':
                             python_version = 'Python 3.7'
+                        elif item['pythonVersion'] == 'python3':
+                            python_version = 'Python 3.7'
                         else:
                             python_version = 'Unknown'
                     else:
