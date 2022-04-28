@@ -1,0 +1,33 @@
+
+domain:
+  - name: Phishing Triage
+    submission:
+      fields: ['indicators']
+    response:
+      fields: 
+        - severity: High
+        - determination: !Benign
+url:
+  - name: TIIA
+    submission:
+      fields: ['indicator']
+    response:
+      fields:
+        - determination
+        - severity
+hash:
+  - name: TIIA
+    submission:
+      fields: ['indicator']
+    response:
+      fields:
+        - determination
+        - severity
+eml:
+  - name: Phishing Triage
+    submission:
+      fields: ['attachments']
+    response:
+      fields: 
+        - severity
+block:
