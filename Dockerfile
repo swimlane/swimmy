@@ -24,4 +24,4 @@ CMD ["gunicorn", \
     "--timeout", "600", \
     "--bind", "0.0.0.0:3000", \
     "--graceful-timeout", "500", \
-    "swimmy.app:create_bot()"]
+    "swimmy.swimmy"]
