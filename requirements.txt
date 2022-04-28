@@ -6,3 +6,4 @@ certifi
 swimlane
 PyYaml
 swimbundle_utils==4.8.1
+botbuilder-integration-aiohttp>=4.14.0
