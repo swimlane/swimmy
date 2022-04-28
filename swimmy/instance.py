@@ -12,6 +12,11 @@ class SwimlaneInstance(Base):
     def __init__(self, host='https://sw_web:4443', username=None, password=None, access_token=None,
                  verify_ssl=False, verify_server_version=False, default_timeout=300,
                  resource_cache_size=0, write_to_read_only=False):
+        if self.config.framework == 'slack':
+            from .frameworks.slack.formatter import Formatter
+        elif self.config.framework == 'teams':
+            from .frameworks.teams.formatter import TeamsFormatter as Formatter
+        self.formatter = Formatter()
         if username and password:
             self.swimlane = Swimlane(
                 host=host,
@@ -37,15 +42,7 @@ class SwimlaneInstance(Base):
             raise AttributeError('Please provide either a username and password or a access token!')
 
     @log_exception
-    def get_application_tasks(self, application_id):
-        return self.swimlane.request('GET', f'/task/list/{application_id}').json()
-
-    @log_exception
-    def get_field_descriptors(self):
-        return self.swimlane.request('GET', '/app/fields/descriptor/mapping').json()
-
-    @log_exception
-    def get_swimlane_record(self, tracking_id: str):
+    def get_record(self, tracking_id: str):
         self.__logger.info(f'Attempting to retrieve information about swimlane record {tracking_id}')
         acronym = tracking_id.split('-')[0]
         if acronym:
@@ -55,27 +52,30 @@ class SwimlaneInstance(Base):
                 if application:
                     record = application.records.get(tracking_id=tracking_id.strip())
                     if record:
-                        return {
+                        return self.formatter.parse_record(results={
                             'json': record.for_json(),
                             'created': record.created,
                             'modified': record.modified,
                             'id': record.id,
                             'application_id': app.id
-                        }
+                        })
         return {}
 
     @log_exception
-    def get_application_by_acronym(self, acronym):
+    def get_application_by_acronym(self, acronym, return_formatted_card=False):
         self.__logger.info('Getting application by provided acronym')
         apps = self.swimlane.apps.list()
         if apps:
             for app in apps:
-                if app.acronym == acronym:
-                    return app
+                if app.acronym == acronym.upper():
+                    if return_formatted_card:
+                        return self.formatter.build(record_id=app.id)
+                    else:
+                        return app
 
     @log_exception
-    def get_swimlane_plugins(self):
-        return self.swimlane.request('GET', '/task/packages').json()
+    def get_plugins(self):
+        return self.formatter.build(self.swimlane.request('GET', '/task/packages').json())
 
     def get_pip_packages(self, versions=['Python2_7', 'Python3_6', 'Python3']):
         return_list = []
@@ -85,56 +85,49 @@ class SwimlaneInstance(Base):
             except:
                 self.__logger.info(f"The specified version does not exist: {version}")
                 pass
-        return return_list
+        return self.formatter.build(return_list)
 
     @log_exception
     def get_application_tasks(self, application_id):
-        return self.swimlane.request('GET', '/task?applicationId={}'.format(application_id)).json()
+        try:
+            data = self.swimlane.request('GET', '/task?applicationId={}'.format(application_id)).json()
+        except:
+            data = self.swimlane.request('GET', '/task?parentId={}'.format(application_id)).json()
+       # print(data)
+        return self.formatter.build(data, application_id=application_id)
 
     @log_exception
-    def get_swimlane_assets(self):
-        return self.swimlane.request('GET', '/asset').json()
+    def get_assets(self):
+        return self.formatter.build(self.swimlane.request('GET', '/asset').json())
 
     @log_exception
-    def get_swimlane_applications(self):
-        return self.swimlane.request('GET', '/app').json()
-
-    @log_exception
-    def get_swimlane_applications_light(self):
+    def get_applications_light(self):
         results = self.swimlane.request('GET', '/app/light').json()
         if results:
             for item in results:
                 item.update({
-                    'default_report_id': self.get_swimlane_default_report_by_application_id(item.get('id')).get('id')
+                    'default_report_id': self.get_default_report_by_application_id(item.get('id')).get('id')
                 })
-        return results
+        return self.formatter.build(results)
 
     @log_exception
-    def get_swimlane_default_report_by_application_id(self, application_id):
+    def get_default_report_by_application_id(self, application_id):
         return self.swimlane.request('GET', f'/reports/app/{application_id}/default').json()
 
     @log_exception
-    def get_swimlane_workspaces(self):
-        return self.swimlane.request('GET', '/workspaces').json()
+    def get_workspaces(self):
+        return self.formatter.build(self.swimlane.request('GET', '/workspaces').json())
 
     @log_exception
-    def get_swimlane_dashboards(self):
-        return self.swimlane.request('GET', '/dashboard').json() 
+    def get_users(self):
+        return self.formatter.build(self.swimlane.request('GET', '/user/light').json())
 
     @log_exception
-    def get_swimlane_users(self):
-        return self.swimlane.request('GET', '/user/light').json()
+    def get_health(self):
+        return self.formatter.build(self.swimlane.request('GET', '/health').json())
 
     @log_exception
-    def get_swimlane_health(self):
-        return self.swimlane.request('GET', '/health').json()
-
-    @log_exception
-    def get_swimlane_common_usage(self):
-        return self.swimlane.request('GET', '/usage/app/common').json()
-
-    @log_exception
-    def search_swimlane(self, keyword):
+    def search(self, keyword):
         application_dict = {}
         url_list = []
         max_results = Config.search_results_max_results
@@ -156,4 +149,4 @@ class SwimlaneInstance(Base):
                                 'url': f'{self.swimlane.host}/record/{key}/{v}',
                                 'text': f'{app.name} - {app.records.get(id=v)}'
                             })
-        return url_list
+        return self.formatter.build(url_list)
